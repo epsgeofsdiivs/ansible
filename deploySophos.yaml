@@ -1,0 +1,21 @@
+- hosts: LinuxDevices
+  vars:
+    - sop_tmp_dir: /tmp/ansible
+    - sop_agent_download_url: https://raw.githubusercontent.com/epsgeofsdiivs/ansible/main/SophosSetup.sh
+    - downloaded_file_name: SophosSetup.sh
+  tasks:
+    - name: SOPHOS | Create Temporary Work Directory
+      file:
+        path: "{{sop_tmp_dir}}"
+        state: directory
+    - name: SOPHOS | Download Sophos Executable
+      get_url:
+        url: "{{ sop_agent_download_url }}"
+        dest: "{{ sop_tmp_dir }}/{{ downloaded_file_name }}"
+    - name: "SOPHOS | Making {{ downloaded_file_name }} executable"
+      file:
+        path: "{{ sop_tmp_dir }}/{{ downloaded_file_name }}"
+        mode: +x
+    - name: Installing Sophos
+      become: true
+      command: sh "{{ sop_tmp_dir }}/{{ downloaded_file_name }}"
