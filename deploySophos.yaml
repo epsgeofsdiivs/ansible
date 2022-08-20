@@ -1,4 +1,4 @@
-- hosts: LinuxDevices
+- hosts: TargetServer
   vars:
     - sop_tmp_dir: /tmp/ansible
     - sop_agent_download_url: https://raw.githubusercontent.com/epsgeofsdiivs/ansible/main/SophosSetup.sh
